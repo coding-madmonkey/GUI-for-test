@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+//#include "Ui_MainWindow.h" go to slot할때 오류 뭐 떴었는데 없어지 이유모름
 
 
 extern Getgas getgas_data;
@@ -36,10 +37,24 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent) :
 
   QObject::connect(&qnode, SIGNAL(RtoC_getcaptureflagUpdated()),    this, SLOT(update100CaptureView()));
 
+  QObject::connect(&qnode, SIGNAL(testCameraUpdated(const QImage &)),    this, SLOT(updatetestCameraView(const QImage &))); //test1-6
 
+  //QObject::connect(&qnode, SIGNAL(RtoC_getgasflagUpdated()),    this, SLOT(testswapimage())); //test 2-9
 
   image_redlight.load(":/rcs/Red.png");
   image_greenlight.load(":/rcs/Green.png");
+
+  image_hedgehog.load(":/rcs/hedgehog.png");
+  image_deer.load(":/rcs/deer.png");
+  image_rabbit.load(":/rcs/rabbit.png"); //test2-7
+
+  //ui->imagechangetest->setPixmap(image_rabbit); //test2-9 이거 유지하면 토끼 뜨는거 확인
+  /*if(testchangenum==0)
+    ui->imagechangetest->setPixmap(image_deer);
+  else if(testchangenum==1)
+    ui->imagechangetest->setPixmap(image_hedgehog);
+  else
+    ui->imagechangetest->setPixmap(image_rabbit);*/
 
   ui->sensor_light_00->setPixmap(image_redlight);
   ui->sensor_light_01->setPixmap(image_redlight);
@@ -72,6 +87,7 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent) :
   ui->joy_btn_triangle->setAttribute(Qt::WA_NoSystemBackground);
 
   swapNum=0;
+  testchangenum=0; //test2-2
 
   if (!image_redlight.load( ":/rcs/Red.png" )) {
       qWarning("Failed to load images/Red.png");
@@ -126,6 +142,17 @@ void MainWindow::updateSub2CameraView(const QImage &msg) {
     //                QPixmap p = QPixmap::fromImage(msg);
 }
 
+void MainWindow::updatetestCameraView(const QImage &msg) {
+
+  //if(swapNum==0)
+    ui->test_camera->setPixmap(QPixmap::fromImage(msg).scaled(ui->test_camera->width(),ui->test_camera->height(),Qt::KeepAspectRatio, Qt::FastTransformation));//test1-8
+  //else if (swapNum==1)
+  //  ui->main_camera->setPixmap(QPixmap::fromImage(msg).scaled(ui->main_camera->width(),ui->main_camera->height(),Qt::KeepAspectRatio, Qt::FastTransformation));
+  //else
+   // ui->sub1_camera->setPixmap(QPixmap::fromImage(msg).scaled(ui->sub1_camera->width(),ui->sub1_camera->height(),Qt::KeepAspectRatio, Qt::FastTransformation));
+
+    //                QPixmap p = QPixmap::fromImage(msg);
+}//test1-7
 void MainWindow::update32GasView() {
 
   if(getgas_data.adc_data[0]<4.0)
@@ -196,7 +223,14 @@ void MainWindow::update32GasView() {
 
 }
 
-
+void MainWindow::testswapimage() {
+    if(testchangenum==0)
+      ui->imagechangetest->setPixmap(image_deer);
+    else if(testchangenum==1)
+      ui->imagechangetest->setPixmap(image_hedgehog);
+    else
+      ui->imagechangetest->setPixmap(image_rabbit);
+} //test2-4
 
 void MainWindow::update100CaptureView() {
 
@@ -314,4 +348,13 @@ void MainWindow::on_imageSwapButton_clicked()
     swapNum++;
     if(swapNum==3)
       swapNum=0;
+    //std::cout<<swapNum<<endl;
+}
+
+void MainWindow::on_imagechangebutton_clicked() //test2-1 making by go to slot by pushbutton
+{
+testchangenum++;
+if(testchangenum==3)
+    testchangenum=0;
+MainWindow::testswapimage(); //test2-10 오예~
 }

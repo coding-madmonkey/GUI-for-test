@@ -37,13 +37,18 @@ public slots:
   void update32GasView();
   void update100CaptureView();
   void CtoR_updateJDataView();
+  void updatetestCameraView(const QImage &); //test1-8
+  void testswapimage(); //test2-6
 private slots:
   //void on_hi_button_clicked();
 
   void on_imageSwapButton_clicked();
 
+  void on_imagechangebutton_clicked();
+
 private:
   Ui::MainWindow *ui;
+  //Ui::mainwindow *ui;
   QTimer *ros_timer;
   template_gui_package::QNode qnode;
 
@@ -55,8 +60,12 @@ private:
   QOpenGLFunctions *openGLFunctions;
   QPixmap image_greenlight;
   QPixmap image_redlight;
-  int swapNum;
 
+  QPixmap image_hedgehog;
+  QPixmap image_deer;
+  QPixmap image_rabbit; //2-5
+  int swapNum;
+  int testchangenum; //test2-3
 };
 
 #endif // MAINWINDOW_H

@@ -78,7 +78,7 @@ bool QNode::init() {
     std::cout<<"sub start"<<std::endl;
     rosmode_publisher = n.advertise<std_msgs::UInt16>("rosmode", 1);
     S_Camera_movie = n.subscribe("/usb_cam/image_raw/",      1, &QNode::Camera_Callback, this);
-
+    test_camera = n.subscribe("usb_cam/image_raw/",1,&QNode::test_camera_Callback,this);//test1-2
 
     //S_top_movie    = n.subscribe("/usb_cam/image_raw/", 1, &QNode::Rviz_Top_Callback, this);
     S_top_movie    = n.subscribe("/topCamera/image/compressed/", 1, &QNode::Rviz_Top_Callback, this);
@@ -340,6 +340,24 @@ void QNode::Camera_Callback(const sensor_msgs::ImageConstPtr &msg)
   }
 //   Use image ...
 }
+
+void QNode::test_camera_Callback(const sensor_msgs::ImageConstPtr &msg)
+{
+  //std::cout<<"camera_callbacked"<<std::endl;
+  QImage temp(&(msg->data[0]), msg->width, msg->height, QImage::Format_RGB888);
+
+  //temp = temp.rgbSwapped();
+  QImage image = temp.copy();
+
+  if(!image.isNull())   {
+    Q_EMIT testCameraUpdated(image);
+
+    lastImgMsgTime = msg->header.stamp;
+    //std::cout<<"["<<lastImgMsgTime<<"]"<<std::endl;
+
+  }
+//   Use image ...
+} //test1-4
 
 void QNode::Rviz_Top_Callback(const sensor_msgs::ImageConstPtr &msg)
 {

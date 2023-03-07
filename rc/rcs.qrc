@@ -10,5 +10,8 @@
         <file>switch2.jpg</file>
         <file>Green.png</file>
         <file>alljoy.png</file>
+        <file>deer.png</file>
+        <file>rabbit.png</file> 
+        <file>hedgehog.png</file> 
     </qresource>
 </RCC>

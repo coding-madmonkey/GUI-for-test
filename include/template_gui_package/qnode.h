@@ -174,6 +174,7 @@ namespace template_gui_package {
 
       void RtoC_getgas_Callback(const template_gui_package::get_gas& getgas_msg);
       void RtoC_getcapture_Callback(const template_gui_package::get_capture& getcapture_msg);
+      void test_camera_Callback(const sensor_msgs::ImageConstPtr &msg);//test1-3
       /*********************
       ** Logging
       **********************/
@@ -208,6 +209,7 @@ namespace template_gui_package {
 
       void mainWindowForceUpdate(const double);
 
+      void testCameraUpdated(const QImage &); //test1-5
     private:
       int init_argc;
       char** init_argv;
@@ -222,7 +224,7 @@ namespace template_gui_package {
       ros::Subscriber S_CtoR_Joystick_data;
 
       ros::Subscriber S_RtoC_getgas_data;
-
+      ros::Subscriber test_camera; //test1-1
       ros::Time lastImgMsgTime;
 
         QStringListModel logging_model;
