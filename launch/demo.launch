@@ -1,0 +1,3 @@
+<launch>
+  <node name="hello_gui_node" pkg="template_gui_package" type="hello_gui_node" output="screen"/>
+</launch>

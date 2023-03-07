@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/rcs">
+        <file>icon.png</file>
+        <file>my_gui_icon.png</file>
+        <file>my_gui_icon.svg</file>
+        <file>rclab.png</file>
+        <file>rclablogo2</file>
+        <file>Red.png</file>
+        <file>switch1.jpg</file>
+        <file>switch2.jpg</file>
+        <file>Green.png</file>
+        <file>alljoy.png</file>
+    </qresource>
+</RCC>
